@@ -1,5 +1,4 @@
 <!--menu de navigation du pied de page-->
-
     <div class="row shadow mt-3 mb-1 mx-0">
         <div class="col rounded bg-dark p-3 text-left">
             <a class="text-white-50 p-1" href="mention.php"> Mentions légales</a>

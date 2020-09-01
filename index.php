@@ -1,3 +1,4 @@
+<!--header-->
 <?php 
     include("header.php");
 ?>
@@ -20,6 +21,7 @@
             </div>
         </div>
 </div>
+<!--menu de navigation du pied de page-->
 <?php 
     include("footer.php");
 ?>

@@ -1,27 +1,43 @@
-<!DOCTYPE html>
-     <html lang="fr">
-     <head>
-        <meta charset="UTF-8">
-        <title>Atelier PHP N°4 - page de détail</title>
-        <?php    
-        require "connexion_bdd.php"; // Inclusion de notrebibliothèque de fonctions
+<!--header-->
+<?php
+include("header.php");
+?>
 
-        $db = connexionBase(); // Appel de la fonction deconnexion
-        $pro_id = $_GET["id"];
-        $requete = "SELECT * FROM produits WHERE pro_id=".$pro_id;
+<?php
+// requete SQL
+$pro_id = $_GET["id"];
+$requete = "SELECT * FROM produits WHERE pro_id=" . $pro_id;
 
-        $result = $db->query($requete);
+$result = $db->query($requete);
 
-        // Renvoi de l'enregistrement sous forme d'un objet
-        $produit = $result->fetch(PDO::FETCH_OBJ);
-       ?>
+if (!$result) {
+  $tableauErreurs = $db->errorInfo();
+  echo $tableauErreur[2];
+  die("Erreur dans la requête");
+}
 
-       </head>
-       <body> 
-       <?php echo $produit->pro_libelle; ?> référence <?php echo $produit->pro_ref; ?>
-       <br>
-       <?php echo $produit->pro_description; ?>
-       <br>
-       <?php echo $produit->pro_prix; ?>
-       </body>
-     </html>
+if ($result->rowCount() == 0) {
+  // Pas d'enregistrement
+  die("La table est vide");
+}
+
+// Renvoi de l'enregistrement sous forme d'un objet
+$produit = $result->fetch(PDO::FETCH_OBJ);
+?>
+
+<!-- Formulaire  -->
+  <?php
+    // image
+        $pathImg = 'src ="public/images/'.$produit->pro_id.'.'.$produit->pro_photo.'"';
+        echo "<div'><img class='mx-auto d-block img-fluid w-25'".$pathImg." alt=".$produit->pro_libelle." title=".$produit->pro_libelle."></div>";        
+     //  Formulaire
+    
+  
+  
+  ?>
+
+
+<!--menu de navigation du pied de page-->
+<?php
+include("footer.php");
+?>

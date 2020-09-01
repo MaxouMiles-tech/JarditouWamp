@@ -1,12 +1,18 @@
-<!--header-->
-<?php 
-    include("header.php");
+<?php
+echo'<div>'
+
+
+
+
+echo'</div>'
+
 ?>
-<!-- Formulaire  -->
-    <div>
+
+
+<!-- 
         <p class="mt-4">* Ces zones sont obligatoires</p>
         <h1>Vos coordonnées</h1>
-        <form action="public/php/validation.php" method="POST" id= "form1" name="form1">
+        <form action="public/php/Jarditou.php" method="POST" id= "form1" name="form1">
             <div class="form-group">
                 <label for="nom">Nom*</label>
                 <input type="text" class="form-control" name="nom" id="nom" placeholder= "Veuillez saisir votre nom" >
@@ -76,8 +82,4 @@
               <button type="submit" name="bouton" class="btn btn-dark mt-3 mr-1">Envoyer</button>
               <button type="reset" name="bouton" class="btn btn-dark mt-3">Annuler</button>
         </form>
-    </div>
-<!--menu de navigation du pied de page-->
-<?php 
-    include("footer.php");
-?>
+    </div> 
