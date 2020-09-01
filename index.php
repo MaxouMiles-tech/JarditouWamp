@@ -4,7 +4,7 @@
 ?>
 
 <!-- corps du site      -->
-<div class="container-fluid">
+
         <div class="row d-flex mx-0">
             <div class="shadow col-12 col-md-8"> 
                     <p class="h2" id="#entreprise">L'entreprise</p>
@@ -20,7 +20,7 @@
                 <p class="h2 text-center mt-3">[COLONNE DROITE]</p>
             </div>
         </div>
-</div>
+
 <!--menu de navigation du pied de page-->
 <?php 
     include("footer.php");
