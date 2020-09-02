@@ -22,8 +22,17 @@
        die("La table est vide");
     }
 ?>
+    <div class="row shadow mt-3 mb-3 mx-0 p-3  rounded bg-dark">
+    <div class="col-2  text-white-50 text-right"></div>
+    <div class="col-8 h2 text-white-50 text-center">Catalogue</div>
+    <div class="col-2 text-center">
+        <a class="text-white-50 nav-link" href="add_form.php">Ajouter un produit</a>
+    </div>
+    </div>
+
 <!-- tableau -->
 <div class="table-responsive">
+
     <table class="table  class='text-center table-bordered table-striped">
         <thead class="thead-light">
             <tr class="h2">
@@ -72,8 +81,8 @@
     }
 
     echo "</table>"; 
-    ?>
-</div>   
+    ?>                   
+
 <!--menu de navigation du pied de page-->
 <?php 
     include("footer.php");

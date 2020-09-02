@@ -30,7 +30,7 @@
                         <a class="nav-link" href="index.php">Accueil<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="tableau.php">Tableau</a>
+                        <a class="nav-link" href="tableau.php">Catalogue</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contact.php">Contact</a>
@@ -45,5 +45,4 @@
 
 <!--banniere-->    
     <img class="img-fluid vw-100 " src="public/images/promotion.jpg" alt="Banière Promotion Jarditou" title="Banière Promotion Jarditou" id="baniere">
-    
 </body>
