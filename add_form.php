@@ -18,14 +18,14 @@ if ($result->rowCount() == 0) {
 }
 ?>
 
-    <div class="row shadow mt-3 mb-1 mx-0">
+    <div class="row mt-3 mb-1 mx-0">
         <div class="col h2 rounded bg-dark text-white-50 p-3 text-center">Nouveau produit</div>
     </div><br>
     <h1>Informations du produit</h1>
     <form action="public/php/add_script.php" method="POST" id= "verifajout" name="verifajout">
     <div class="form-group">
-            <label for="categorie">Photo : </label>
-            <input type="text" class="form-control" name="photo" id="photo" value="jpg" disabled>
+            <label for="extension">Extension Photo : </label>
+            <input type="text" class="form-control" name="extension" id="extension" value="jpg" disabled>
         </div>
         <!-- <p  id="errorPhoto" class="text-danger""></p> -->    
         <div class="form-group"> 

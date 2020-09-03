@@ -4,7 +4,6 @@ include("header.php");
 
 // requete SQL
 $pro_id = $_GET["id"];
-$modif =$_GET["modif"];
 $requete = "SELECT * FROM produits 
             INNER JOIN categories ON produits.pro_cat_id = categories.cat_id 
             WHERE pro_id=" . $pro_id;
@@ -12,7 +11,7 @@ $result = $db->query($requete);
 
 if (!$result) {
   $tableauErreurs = $db->errorInfo();
-  echo $tableauErreur[2];
+  echo $tableauErreurs[2];
   die("Erreur dans la requête");
 }
 
@@ -47,37 +46,37 @@ $dateModif = $produit->pro_d_modif;
   <form action="#" method="POST" id= "form2" name="form2">
     <div class="form-group"> 
       <label for="reference">Référence : </label>
-      <input readonly type="text"<?php echo'class="form-control" name="'.$reference .'" id="'.$reference.'" placeholder="'.$reference.'">';?>
+      <input readonly type="text" class="form-control" placeholder="<?php echo $reference;?>">
     </div>
     <!-- <p  id="errorRef" class="text-danger"></p> -->
     <div class="form-group">
       <label for="categorie">Catégorie : </label>
-      <input readonly type="text" <?php  echo' class="form-control" name="'.$categorie.'" id="'.$categorie.'" placeholder="'.$categorie.'">';?>
+      <input readonly type="text" class="form-control" placeholder="<?php echo $categorie;?>">
     </div>
     <!-- <p  id="errorCat" class="text-danger""></p> -->
     <div class="form-group">
       <label for="libelle">Libellé : </label>
-      <input type="text" readOnly <?php echo'class="form-control" name="'.$libelle.'" id="'.$libelle.'" placeholder="'.$libelle.'">';?>
+      <input type="text" readOnly class="form-control" placeholder="<?php echo $libelle;?>">
       </div>
       <!-- <p  id="errorLibelle" class="text-danger""></p> -->
     <div class="form-group">
       <label for="description">Description : </label>
-      <textarea readOnly <?php echo'class="form-control" name="'.$description.'" id="'.$description.'" placeholder="'.$description.'"></textarea>';?> 
+      <textarea readOnly class="form-control" placeholder="<?php echo $description;?>"></textarea>
     </div>
     <!-- <p  id="errorDescription" class="text-danger""></p> -->
     <div class="form-group">
       <label for="prix">Prix : </label>
-      <input type="text" readOnly <?php echo'class="form-control" name="'.$prix.'" id="'.$prix.'" placeholder="'.$prix.'">';?>
+      <input type="text" readOnly class="form-control" placeholder="<?php echo $prix;?>">
     </div>
     <!-- <p  id="errorDescription" class="text-danger""></p>'-->    
     <div class="form-group">
       <label for="stock">Stock : </label>
-      <input type="text" readOnly <?php echo'class="form-control" name="'.$stock.'" id="'.$stock.'" placeholder="'.$stock.'" >';?>
+      <input type="text" readOnly class="form-control" placeholder="<?php echo $stock;?>"">
     </div>
     <!-- <p  id="errorStock" class="text-danger""></p>-->
     <div class="form-group">
       <label for="couleur">Couleur : </label>
-      <input type="text"  readOnly <?php echo'class="form-control" name="'.$couleur.'" id="'.$couleur.'" placeholder="'.$couleur.'">';?>
+      <input type="text"  readOnly class="form-control" placeholder="<?php echo $couleur;?>"">
     </div>
     <!-- <p  id="errorCouleur" class="text-danger""></p>'; -->
     <?php  if ($bloque == 1)
@@ -99,18 +98,22 @@ $dateModif = $produit->pro_d_modif;
     <!-- <p  id="errorbloque" class="text-danger""></p> -->
     <div class="form-group">
       <label for="dateAjout">Date d'ajout : </label>
-      <input type="text" readOnly <?php echo 'class="form-control" name="'.$dateAjout.'" id="'.$dateAjout.'" placeholder="'.$dateAjout.'">';?>
+      <input type="text" readOnly class="form-control" placeholder="<?php echo $dateAjout;?>"">
     </div>
     <!-- <p  id="errorDateAjout" class="text-danger""></p> -->
     <div class="form-group">
       <label for="dateModif">Date de modification : </label>
-      <input type="text" readOnly <?php echo 'class="form-control" name="'.$dateModif.'" id="'.$dateModif.'" placeholder="'.$dateModif.'">';?>
+      <input type="text" readOnly class="form-control" placeholder="<?php echo $dateModif;?>"">
     </div>
     <!-- <p  id="errorDateModif" class="text-danger""></p> -->
 <!-- bouttons -->
+
+
+
     <a href ="tableau.php" title="retour" role = "button" class="btn btn-dark active mt-3">Retour</a>
-    <a <?php echo'href="#='.$pro_id ?> title ="modif" role="button" class="btn btn-warning mt-3">Modifier</a>
-    <a href="#" title="sup" role="button" class="btn btn-danger mt-3">Supprimer</a>
+    <a <?php echo'href="formulaire_modif.php?id='.$pro_id.'"'?> role="button" class="btn btn-warning mt-3">Modifier</a>
+    <a href="#" title="sup" role="button" class="btn btn-danger mt-3">Supprimer</a>'
+    
   </form>
 
 
@@ -118,3 +121,4 @@ $dateModif = $produit->pro_d_modif;
 <?php
 include("footer.php");
 ?>
+

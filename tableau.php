@@ -57,7 +57,7 @@
         echo "<td class='table-warning'><img class='img-fluid'".$pathImg." alt=".$row->pro_libelle." title=".$row->pro_libelle."></td>";        
         echo"<td class ='align-middle' >".$row->pro_id."</td>";
         echo"<td class ='align-middle' >".$row->pro_ref."</td>";
-        echo '<td class="table-warning align-middle"><u><a class=" text-danger" href="detail.php?id='.$row->pro_id.'&modif=false" title='.$row->pro_libelle.'>'.$row->pro_libelle.'</a></u></td>';
+        echo '<td class="table-warning align-middle"><u><a class=" text-danger" href="detail.php?id='.$row->pro_id.'" title='.$row->pro_libelle.'>'.$row->pro_libelle.'</a></u></td>';
         echo"<td class ='align-middle'>".$row->pro_prix."</td>";
         echo"<td class ='align-middle' >".$row->pro_stock."</td>";
         echo"<td class ='align-middle'  >".$row->pro_couleur."</td>";
