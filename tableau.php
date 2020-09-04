@@ -21,6 +21,7 @@
        // Pas d'enregistrement
        die("La table est vide");
     }
+
 ?>
     <div class="row shadow mt-3 mb-3 mx-0 p-3  rounded bg-dark">
     <div class="col-2  text-white-50 text-right"></div>
@@ -52,11 +53,17 @@
 <?php
     while ($row = $result->fetch(PDO::FETCH_OBJ))
     {
-        $pathImg = 'src ="public/images/'.$row->pro_id.'.'.$row->pro_photo.'"';
-        echo"<tr class='text-center'>";
-        echo "<td class='table-warning'><img class='img-fluid'".$pathImg." alt=".$row->pro_libelle." title=".$row->pro_libelle."></td>";        
-        echo"<td class ='align-middle' >".$row->pro_id."</td>";
-        echo"<td class ='align-middle' >".$row->pro_ref."</td>";
+        $pathImg = 'public/images/' . $row->pro_id . '.' . $row->pro_photo ;
+        echo'<tr class="text-center">';
+        echo '<td class="table-warning">';
+        
+        if(!file_exists($pathImg) )
+        {
+            $pathImg ='public/images/erreurImage.jpg';
+        }
+        echo ' <img class="mx-auto d-block img-fluid" src ="' . $pathImg .' " alt="' . $row->pro_libelle .' " title=" '. $row->pro_libelle .'"></td>';  
+        echo ' <td class ="align-middle" >'.$row->pro_id.'</td>';
+        echo'<td class ="align-middle" >'.$row->pro_ref.'</td>';
         echo '<td class="table-warning align-middle"><u><a class=" text-danger" href="detail.php?id='.$row->pro_id.'" title='.$row->pro_libelle.'>'.$row->pro_libelle.'</a></u></td>';
         echo"<td class ='align-middle'>".$row->pro_prix."</td>";
         echo"<td class ='align-middle' >".$row->pro_stock."</td>";

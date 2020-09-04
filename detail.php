@@ -23,9 +23,14 @@ if ($result->rowCount() == 0) {
 // Renvoi de l'enregistrement sous forme d'un objet
 $produit = $result->fetch(PDO::FETCH_OBJ);
 
-// image
-$pathImg = 'src ="public/images/' . $produit->pro_id . '.' . $produit->pro_photo . '"';
-echo "<div'><img class='mx-auto d-block img-fluid w-25'" . $pathImg . " alt=" . $produit->pro_libelle . " title=" . $produit->pro_libelle . "></div>";
+// image 
+$pathImg = 'public/images/' . $produit->pro_id . '.' . $produit->pro_photo ;
+if(!file_exists($pathImg) )
+{
+    $pathImg ='public/images/erreurImage.jpg';
+}
+echo "<div'><img class='mx-auto d-block img-fluid w-25' src =" . $pathImg . " alt=" . $produit->pro_libelle . " title=" . $produit->pro_libelle . "></div>";
+
 //  Formulaire
 
 $reference = $produit->pro_ref;
@@ -108,13 +113,28 @@ $dateModif = $produit->pro_d_modif;
     <!-- <p  id="errorDateModif" class="text-danger""></p> -->
 <!-- bouttons -->
 
+<script type="text/javascript" language="javascript">
 
+function confirmation(id)
+{
+  if (confirm("Veuillez confirmer la supression de la fiche produit :  <?php echo $produit->pro_ref; ?>?")) {
+
+    window.location.href="public/php/delete_script.php?id=" + id;
+  }
+  else {
+    window.location.href="tableau.php";
+  }
+
+}
+</script>
 
     <a href ="tableau.php" title="retour" role = "button" class="btn btn-dark active mt-3">Retour</a>
     <a <?php echo'href="formulaire_modif.php?id='.$pro_id.'"'?> role="button" class="btn btn-warning mt-3">Modifier</a>
-    <a href="#" title="sup" role="button" class="btn btn-danger mt-3">Supprimer</a>'
+    <a href=javascript:void(0) role="button" onclick ="confirmation(<?php echo $pro_id; ?>)" class="btn btn-danger mt-3">Supprimer</a>
     
   </form>
+
+
 
 
 <!--menu de navigation du pied de page-->

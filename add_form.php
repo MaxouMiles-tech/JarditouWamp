@@ -86,7 +86,7 @@ if ($result->rowCount() == 0) {
     <!-- bouttons -->
         <a href ="tableau.php" title="retour" role = "button" class="btn btn-dark active mt-3">Retour</a>
         <button type="submit" class="btn btn-warning mt-3">Envoyer</button>
-        <button type="reset" title="sup" class="btn btn-danger mt-3">Annuler</button>
+        <button type="reset" title="sup" class="btn btn-danger mt-3">Effacer</button>
     </form>
 
 <!--menu de navigation du pied de page-->

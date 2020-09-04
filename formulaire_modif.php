@@ -7,15 +7,14 @@ $pro_id = $_GET["id"];
 
 $requete = 'SELECT * FROM produits 
 INNER JOIN categories ON produits.pro_cat_id = categories.cat_id
-WHERE pro_id='.$pro_id;
+WHERE pro_id=' . $pro_id;
 
 
 $result = $db->query($requete);
 
-if (!$result) 
-{
+if (!$result) {
     $tableauErreurs = $db->errorInfo();
-    echo $tableauErreurs[2]; 
+    echo $tableauErreurs[2];
     die("Erreur dans la requête");
 }
 // Renvoi de l'enregistrement sous forme d'un objet
@@ -24,11 +23,11 @@ $id = $produit->pro_id;
 $photo = $produit->pro_photo;
 $reference = $produit->pro_ref;
 $categorie = $produit->cat_nom;
-$libelle =$produit->pro_libelle;
+$libelle = $produit->pro_libelle;
 $description = $produit->pro_description;
 $prix = $produit->pro_prix;
-$stock = $produit->pro_stock ;
-$couleur = $produit->pro_couleur ;
+$stock = $produit->pro_stock;
+$couleur = $produit->pro_couleur;
 $bloque = $produit->pro_bloque;
 $non = "checked";
 $oui = "";
@@ -44,31 +43,32 @@ $dateModif = $produit->pro_d_modif;
     <form action="public/php/update_script.php" method="POST" id="verifmodif" name="verifmodif">
         <?php
         // image
-        $pathImg = 'src ="public/images/' . $produit->pro_id . '.' . $produit->pro_photo . '"';
-        echo "<div'><img class='mx-auto d-block img-fluid w-25'" . $pathImg . " alt=" . $produit->pro_libelle . " title=" . $produit->pro_libelle . "></div>";
-        
-        $tab = ["ai","eps","gif","jpeg","pdf","jpg","png","psd","tif","svg"];
-        $i=0;
+        // image 
+        $pathImg = 'public/images/' . $produit->pro_id . '.' . $produit->pro_photo;
+        if (!file_exists($pathImg)) {
+            $pathImg = 'public/images/erreurImage.jpg';
+        }
+        echo "<div'><img class='mx-auto d-block img-fluid w-25' src =" . $pathImg . " alt=" . $produit->pro_libelle . " title=" . $produit->pro_libelle . "></div>";
+        $tab = ["ai", "eps", "gif", "jpeg", "pdf", "jpg", "png", "psd", "tif", "svg"];
+        $i = 0;
 
         ?>
-        <input type="hidden" class="form-control" value="<?php echo $id ;?>" name="id" id="id">
+        <input type="hidden" class="form-control" value="<?php echo $id; ?>" name="id" id="id">
         <div class="form-group">
             <label for="extension">Extension de la Photo : </label>
             <select class="form-control" name="extension" id="extension">
                 <?php
-                    while ($i < count($tab))
-                    {
-                        $selected = "";
-                        if ($photo == $tab[$i])
-                        {
-                            $selected ="selected";
-                        }
-                        echo'<option value ="'.$tab[$i].'"'.$selected.'>'.$tab[$i].'</option>';
-                        $i++;
+                while ($i < count($tab)) {
+                    $selected = "";
+                    if ($photo == $tab[$i]) {
+                        $selected = "selected";
                     }
+                    echo '<option value ="' . $tab[$i] . '"' . $selected . '>' . $tab[$i] . '</option>';
+                    $i++;
+                }
                 ?>
             </select>
-        </div>    
+        </div>
         <!-- <p  id="errorPhoto" class="text-danger""></p> -->
         <div class="form-group">
             <label for="reference">Référence : </label>
@@ -76,25 +76,24 @@ $dateModif = $produit->pro_d_modif;
         </div>
         <!-- <p  id="errorRef" class="text-danger"></p> -->
         <div class="form-group">
-<?php
-$requete = 'SELECT * FROM categories';
-$result = $db->query($requete);
-if (!$result) {
-    $tableauErreurs = $db->errorInfo();
-    echo $tableauErreurs[2];
-    die("Erreur dans la requête");
-}
-?>
+            <?php
+            $requete = 'SELECT * FROM categories';
+            $result = $db->query($requete);
+            if (!$result) {
+                $tableauErreurs = $db->errorInfo();
+                echo $tableauErreurs[2];
+                die("Erreur dans la requête");
+            }
+            ?>
             <label for="categorie">Catégorie : </label>
             <select class="form-control" name="categorie" id="categorie">
                 <?php
-                while ($cat = $result->fetch(PDO::FETCH_OBJ)) 
-                {
-                    $selected ="";
-                    if ($categorie == $cat->cat_nom ){
+                while ($cat = $result->fetch(PDO::FETCH_OBJ)) {
+                    $selected = "";
+                    if ($categorie == $cat->cat_nom) {
                         $selected = "selected";
                     }
-                    echo '<option value="' . $cat->cat_id . '" '.$selected.'>' . $cat->cat_nom . '</option>';
+                    echo '<option value="' . $cat->cat_id . '" ' . $selected . '>' . $cat->cat_nom . '</option>';
                 }
                 ?>
             </select>
@@ -125,27 +124,26 @@ if (!$result) {
             <input type="text" class="form-control" name="couleur" id="couleur" value="<?php echo $couleur; ?>">
         </div>
         <!-- <p  id="errorCouleur" class="text-danger""></p>'; -->
-        <?php  if ($bloque == 1)
-      {
-            $oui = $non; 
-            $non = " "; 
-      } ?>
-    <div class="form-group">
-      <p><label>Produit bloqué ? :</label></p>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="bloque" value ="1" id="oui" <?php echo $oui; ?> >
-        <label class="form-check-label" for="prodBloque">Oui</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="bloque" value =""  id="non" <?php echo $non; ?> >
-        <label class="form-check-label" for="non">Non</label>
-      </div>
-    </div>
-    <!-- <p  id="errorbloque" class="text-danger""></p> -->
+        <?php if ($bloque == 1) {
+            $oui = $non;
+            $non = " ";
+        } ?>
+        <div class="form-group">
+            <p><label>Produit bloqué ? :</label></p>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="bloque" value="1" id="oui" <?php echo $oui; ?>>
+                <label class="form-check-label" for="prodBloque">Oui</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="bloque" value="null" id="non" <?php echo $non; ?>>
+                <label class="form-check-label" for="non">Non</label>
+            </div>
+        </div>
+        <!-- <p  id="errorbloque" class="text-danger""></p> -->
         <!-- bouttons -->
-        <a <?php echo'href="detail.php?id='.$pro_id.'"'?> title="retour" role="button" class="btn btn-dark active mt-3">Retour</a>
+        <a <?php echo 'href="detail.php?id=' . $pro_id . '"' ?> title="retour" role="button" class="btn btn-dark active mt-3">Retour</a>
         <button type="submit" class="btn btn-warning mt-3">Envoyer</button>
-        <button type="reset" title="sup" class="btn btn-danger mt-3">Annuler</button>
+        <button type="reset" title="sup" class="btn btn-danger mt-3">Effacer</button>
     </form>
 
     <!--menu de navigation du pied de page-->

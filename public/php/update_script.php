@@ -63,7 +63,7 @@
         echo "Le prix doit comporter au moins 1 caractère numérique! <br>";
         $check = false;
     }
-    if (!preg_match('/^[0-9]$/', $stock)) {
+    if (!preg_match('/^[0-9]+$/', $stock)) {
         echo "Le stock doit comporter au moins 1 caractère numérique! <br>";
         $check = false;
     }
@@ -76,28 +76,28 @@ if ($check) {
 
 /* Définition de la requête */
 $query = "UPDATE produits SET   
-    pro_photo = '".$photo."'
+    pro_photo = '".$photo."',
+    pro_cat_id = ".$categorie.",
+    pro_ref = '".$reference."',
+    pro_libelle = '".$libelle."',
+    pro_description = '".$description."',
+    pro_prix = ".$prix.",
+    pro_stock  = ".$stock.",
+    pro_couleur = '".$couleur."',
+    pro_d_modif = '".$datemodif."',
+    pro_bloque = ".$bloque."
 
-Where $id = pro_id;";
+Where pro_id  = $id";
+
+
 
 /* Envoie de la requête */
 $result = $db->query($query);
 
-/* Affichage du nombre de lignes affectées par la requête */
-echo 'Nombre de lignes affectées (UPDATE): ';
+header("Location:../../tableau.php");
 
-/* Affichage de la requête (comme ça tu vois ce que contiennent tes variables $_POST) */
-echo  $query;
-
- echo '<div> <br>La fiche détail du produit a été modifié !!! <br></div>';
 }
  
-
-
-
-/* header("Location:../../tableau.php");*/
-
-
 
 ?>
 </body>
