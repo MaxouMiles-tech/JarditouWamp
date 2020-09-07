@@ -4,6 +4,9 @@
 ?>
 <!-- Formulaire  -->
     <div>
+    <div class="row mt-3 mb-1 mx-0">
+        <div class="col h2 rounded bg-dark text-white-50 p-3 text-center">Contact</div>
+    </div>
         <p class="mt-4">* Ces zones sont obligatoires</p>
         <h1>Vos coordonnées</h1>
         <form action="public/php/validation.php" method="POST" id= "verifcontact" name="verifcontact">

@@ -3,6 +3,9 @@
     include("header.php");
 ?>
 <!--Tableau d'horaire-->
+<div class="row mt-3 mb-1 mx-0">
+    <div class="col h2 rounded bg-dark text-white-50 p-3 text-center">Horaires</div>
+</div>
     <div class="table-responsive ">
             <table class="table">
                 <thead class="thead-light">

@@ -4,7 +4,9 @@
 ?>
 
 <!-- corps du site      -->
-
+<div class="row mt-3 mb-1 mx-0">
+    <div class="col h2 rounded bg-dark text-white-50 p-3 text-center">Accueil</div>
+</div>
         <div class="row d-flex mx-0">
             <div class="shadow col-12 col-md-8"> 
                     <p class="h2" id="#entreprise">L'entreprise</p>

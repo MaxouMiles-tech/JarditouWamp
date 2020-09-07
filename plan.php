@@ -4,6 +4,9 @@
 ?>
 
 <!--Plan du site-->
+<div class="row mt-3 mb-1 mx-0">
+    <div class="col h2 rounded bg-dark text-white-50 p-3 text-center">Plan du site</div>
+</div>
         <div class="row d-flex mx-0">
             <div class=" col-12 "> 
                 <ul class="nav flex-column">
