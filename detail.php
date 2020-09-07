@@ -66,7 +66,7 @@ $dateModif = $produit->pro_d_modif;
       <!-- <p  id="errorLibelle" class="text-danger""></p> -->
     <div class="form-group">
       <label for="description">Description : </label>
-      <textarea readOnly class="form-control" placeholder="<?php echo $description;?>"></textarea>
+      <textarea readOnly class="form-control overflow-auto" placeholder="<?php echo $description;?>"></textarea>
     </div>
     <!-- <p  id="errorDescription" class="text-danger""></p> -->
     <div class="form-group">

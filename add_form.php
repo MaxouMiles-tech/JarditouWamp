@@ -22,8 +22,13 @@ if ($result->rowCount() == 0) {
         <div class="col h2 rounded bg-dark text-white-50 p-3 text-center">Nouveau produit</div>
     </div><br>
     <h1>Informations du produit</h1>
-    <form action="public/php/add_script.php" method="POST" id= "verifajout" name="verifajout">
-    <div class="form-group">
+    <form action="public/php/add_script.php" method="POST" enctype="multipart/form-data" id= "verifajout" name="verifajout">
+        <div class="form-group">
+            <label for="photo">Télécharger la photo du produit :</label></br>
+            <input type="file" name="photo" /><br />
+            <input type="submit" value="Envoyer la photo" />
+        </div>
+        <div class="form-group">
             <label for="extension">Extension Photo : </label>
             <input type="text" class="form-control" name="extension" id="extension" value="jpg" disabled>
         </div>
@@ -53,7 +58,7 @@ if ($result->rowCount() == 0) {
         <!-- <p  id="errorLibelle" class="text-danger""></p> -->
         <div class="form-group">
             <label for="description">Description : </label>
-            <textarea class="form-control" name="description" id="description" placeholder="Entrez la Description"></textarea>
+            <textarea class="form-control overflow-auto" name="description" id="description" placeholder="Entrez la Description"></textarea>
         </div>
         <!-- <p  id="errorDescription" class="text-danger""></p> -->
         <div class="form-group">
