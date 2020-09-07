@@ -45,32 +45,25 @@
         require "connexion_bdd.php"; // Inclusion de notrebibliothèque de fonctions
         $db = connexionBase(); // Appel de la fonction deconnexion
         $pro_id = $_GET["id"];
-        $requete = 'SELECT pro_ref FROM produits
-                    WHERE pro_id=' . $pro_id;
+
+        $requete = 'SELECT pro_photo from produits
+        where pro_id=' . $pro_id;
         $result = $db->query($requete);
 
-        if (!$result) {
-            $tableauErreurs = $db->errorInfo();
-            echo $tableauErreurs[2];
-            die("Erreur dans la requête");
-        }
 
-        if ($result->rowCount() == 0) {
-            // Pas d'enregistrement
-            die("La table est vide");
-        }
-
-        // Renvoi de l'enregistrement sous forme d'un objet
         $produit = $result->fetch(PDO::FETCH_OBJ);
-
+        $extension =$produit->pro_photo;
 
         $query = "DELETE FROM produits Where pro_id  = $pro_id";
         /* Envoie de la requête */
         $result = $db->query($query);
 
         if ($result) {
-            echo '<br>Votre demande de supression a été prise en compte ! <br>';
+            $chemin = '../../public/images/'.$pro_id.'.'.$extension;
+            unlink($chemin);
+            header("Location:../../tableau.php");
         }
+
         ?>
         <!--menu de navigation du pied de page-->
         <div class="shadow mt-3 mb-1 mx-0">

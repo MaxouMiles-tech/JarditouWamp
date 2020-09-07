@@ -20,7 +20,7 @@ if (!$result) {
 // Renvoi de l'enregistrement sous forme d'un objet
 $produit = $result->fetch(PDO::FETCH_OBJ);
 $id = $produit->pro_id;
-$photo = $produit->pro_photo;
+$extension = $produit->pro_photo;
 $reference = $produit->pro_ref;
 $categorie = $produit->cat_nom;
 $libelle = $produit->pro_libelle;
@@ -40,35 +40,23 @@ $dateModif = $produit->pro_d_modif;
         <div class="col h2 rounded bg-dark text-white-50 p-3 text-center">Modifier le produit</div>
     </div><br>
     <h1>Informations du produit</h1>
-    <form action="public/php/update_script.php" method="POST" id="verifmodif" name="verifmodif">
+    <form action="public/php/update_script.php" enctype="multipart/form-data" method="POST" id="verifmodif" name="verifmodif">
         <?php
-        // image
         // image 
-        $pathImg = 'public/images/' . $produit->pro_id . '.' . $produit->pro_photo;
+        $pathImg = 'public/images/' . $id . '.' . $extension;
         if (!file_exists($pathImg)) {
             $pathImg = 'public/images/erreurImage.jpg';
         }
-        echo "<div'><img class='mx-auto d-block img-fluid w-25' src =" . $pathImg . " alt=" . $produit->pro_libelle . " title=" . $produit->pro_libelle . "></div>";
-        $tab = ["ai", "eps", "gif", "jpeg", "pdf", "jpg", "png", "psd", "tif", "svg"];
-        $i = 0;
-
+        echo "<div'><img class='mx-auto d-block img-fluid w-25' src =" . $pathImg . " alt=" . $libelle . " title=" . $libelle . "></div>";
         ?>
+
         <input type="hidden" class="form-control" value="<?php echo $id; ?>" name="id" id="id">
+        <input type="hidden" class="form-control" value="<?php echo $extension; ?>" name="extension" id="extension">
         <div class="form-group">
-            <label for="extension">Extension de la Photo : </label>
-            <select class="form-control" name="extension" id="extension">
-                <?php
-                while ($i < count($tab)) {
-                    $selected = "";
-                    if ($photo == $tab[$i]) {
-                        $selected = "selected";
-                    }
-                    echo '<option value ="' . $tab[$i] . '"' . $selected . '>' . $tab[$i] . '</option>';
-                    $i++;
-                }
-                ?>
-            </select>
+            <label  for="photo">Télécharger la photo du produit :</label></br> 
+            <input  type="file"  name="photo"></br>
         </div>
+
         <!-- <p  id="errorPhoto" class="text-danger""></p> -->
         <div class="form-group">
             <label for="reference">Référence : </label>

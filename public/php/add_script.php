@@ -69,16 +69,42 @@
         $description = $_POST['description'];
         $prix = $_POST['prix'];
         $stock = $_POST['stock'];
-        $couleur = $_POST['couleur'];
+        // Création de la variable qui va stocker le texte en minuscule
+        $texteMinuscule = strtolower($_POST["couleur"]);
+        // Création de la variable qui va mettre en majuscule la première lettre
+        $couleur = ucwords($texteMinuscule);
         $check = true;
         $bloque = $_POST['bloque'];
         $id = ($max->max_pro_id) + 1;
-        $photo = "jpg";
         $dateAjout = date('Y-m-d');
 
 
+        if (!empty($_FILES["photo"]["name"])){
 
-        
+            $extension = substr(strrchr($_FILES["photo"]["name"], "."), 1);
+    
+            // On met les types autorisés dans un tableau (ici pour une image)
+            $aMimeTypes = array("image/ai", "image/eps", "image/jpeg", "image/gif", "image/pdf", "image/jpg", "image/png",  "image/psd", "image/tiff", "image/svg");
+    
+            // On extrait le type du fichier via l'extension FILE_INFO 
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimetype = finfo_file($finfo, $_FILES["photo"]["tmp_name"]);
+            finfo_close($finfo);
+    
+            if (in_array($mimetype, $aMimeTypes)) {
+                if (isset($_FILES['photo']) AND $_FILES["photo"]["error"] == 0) {
+                    move_uploaded_file($_FILES['photo']['tmp_name'], '../../public/images/' . $id.".".$extension);
+                }
+            } else {
+                // Le type n'est pas autorisé, donc ERREUR
+                echo "Type de fichier non autorisé";
+                exit;
+            }   
+        } else {
+            $extension = null;
+        }
+     
+
         // 3 cas possible : rien, expression REGEX et formulaire ok
         if (empty($reference)) {
             echo "La référence doit être renseignée ! <br>";
@@ -92,10 +118,6 @@
             echo "Le libellé doit être renseignée ! <br>";
             $check = false;
         }
-        if (empty($description)) {
-            echo "La description doit être renseignée ! <br>";
-            $check = false;
-        }
         if (empty($prix)) {
             echo "Le prix doit être renseignée ! <br>";
             $check = false;
@@ -106,7 +128,7 @@
         if (empty($stock)) {
             echo "Le stock doit être renseignée ! <br>";
             $check = false;
-        } else  if (!preg_match('/^[0-9]$/', $stock)) {
+        } else  if (!preg_match('/^[0-9]+$/', $stock)) {
             echo "Le stock doit comporter au moins 1 caractère numérique! <br>";
             $check = false;
         }
@@ -123,7 +145,7 @@
             $result = $db->query($requete);
             if (!$result->fetch(PDO::FETCH_OBJ)) {
                 $db->exec('INSERT INTO produits (pro_id, pro_cat_id, pro_ref, pro_libelle, pro_description, pro_prix, pro_stock, pro_couleur, pro_photo, pro_d_ajout, pro_bloque)
-                VALUE(' . $id . ',' . $categorie . ',"' . $reference . '","' . $libelle . '","' . $description . '",' . $prix . ',' . $stock . ',"' . $couleur . '","' . $photo . '","' . $dateAjout . '",' . $bloque . ')');
+                VALUE(' . $id . ',' . $categorie . ',"' . $reference . '","' . $libelle . '","' . $description . '",' . $prix . ',' . $stock . ',"' . $couleur . '","' . $extension . '","' . $dateAjout . '",' . $bloque . ')');
                 header("Location:../../tableau.php");
             } else {
                 echo '<br>Votre produit existe déjà !!';
@@ -135,14 +157,18 @@
 <div class="shadow mt-3 mb-1 mx-0">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark rounded">
         <ul class="navbar-nav ">
-            <li class="nav-item"><a href="../../mention.php" class="nav-link"> Mentions légales</a><li>
-            <li class="nav-item"><a href="../../horaires.php"class="nav-link"> Horaires</a><li>
-            <li class="nav-item"><a href="plan.php" class="nav-link"> Plan du site</a><li>
+            <li class="nav-item"><a href="../../mention.php" class="nav-link"> Mentions légales</a>
+            <li>
+            <li class="nav-item"><a href="../../horaires.php" class="nav-link"> Horaires</a>
+            <li>
+            <li class="nav-item"><a href="plan.php" class="nav-link"> Plan du site</a>
+            <li>
         </ul>
     </nav>
 </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
+
 </html>

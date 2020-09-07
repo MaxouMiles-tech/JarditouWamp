@@ -48,16 +48,47 @@
     // declaration de variable qui recupere la value
     $check = true;
     $id = $_POST['id'];
-    $photo = $_POST['extension'];
+ 
     $reference = $_POST['reference'];
     $categorie = $_POST['categorie'];
     $libelle = $_POST['libelle'];
     $description = $_POST['description'];
     $prix = $_POST['prix'];
     $stock = $_POST['stock'];
-    $couleur = $_POST['couleur'];
+    // Création de la variable qui va stocker le texte en minuscule
+    $texteMinuscule = strtolower($_POST["couleur"]);
+    // Création de la variable qui va mettre en majuscule la première lettre
+    $couleur = ucwords($texteMinuscule);
     $bloque = $_POST['bloque'];
     $datemodif = date('Y-m-d'); 
+
+    if (!empty($_FILES["photo"]["name"])){
+
+        $extension = substr(strrchr($_FILES["photo"]["name"], "."), 1);
+
+        // On met les types autorisés dans un tableau (ici pour une image)
+        $aMimeTypes = array("image/ai", "image/eps", "image/jpeg", "image/gif", "image/pdf", "image/jpg", "image/png",  "image/psd", "image/tiff", "image/svg");
+
+        // On extrait le type du fichier via l'extension FILE_INFO 
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimetype = finfo_file($finfo, $_FILES["photo"]["tmp_name"]);
+        finfo_close($finfo);
+
+        if (in_array($mimetype, $aMimeTypes)) {
+            if (isset($_FILES['photo']) AND $_FILES["photo"]["error"] == 0) {
+                move_uploaded_file($_FILES['photo']['tmp_name'], '../../public/images/' . $id.".".$extension);
+            }
+        } else {
+            // Le type n'est pas autorisé, donc ERREUR
+            echo "Type de fichier non autorisé";
+            exit;
+        }
+
+
+    } else {
+        $extension = $_POST['extension'];
+    }
+ 
 
     if (!preg_match('/[0-9 ]{1,}[,.]{0,1}[0-9]{0,2}[€]{0,1}/', $prix)) {
         echo "Le prix doit comporter au moins 1 caractère numérique! <br>";
@@ -76,7 +107,7 @@ if ($check) {
 
 /* Définition de la requête */
 $query = "UPDATE produits SET   
-    pro_photo = '".$photo."',
+    pro_photo = '".$extension."',
     pro_cat_id = ".$categorie.",
     pro_ref = '".$reference."',
     pro_libelle = '".$libelle."',
