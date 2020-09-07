@@ -76,6 +76,9 @@
         $photo = "jpg";
         $dateAjout = date('Y-m-d');
 
+
+
+        
         // 3 cas possible : rien, expression REGEX et formulaire ok
         if (empty($reference)) {
             echo "La référence doit être renseignée ! <br>";

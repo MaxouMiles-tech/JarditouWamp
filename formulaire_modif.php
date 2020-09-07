@@ -106,7 +106,7 @@ $dateModif = $produit->pro_d_modif;
         <!-- <p  id="errorLibelle" class="text-danger""></p> -->
         <div class="form-group">
             <label for="description">Description : </label>
-            <textarea class="form-control" name="description" id="description"><?php echo $description; ?></textarea>
+            <textarea class="form-control  overflow-auto " name="description" id="description"><?php echo $description; ?></textarea>
         </div>
         <!-- <p  id="errorDescription" class="text-danger""></p> -->
         <div class="form-group">
