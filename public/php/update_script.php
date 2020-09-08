@@ -83,23 +83,27 @@
             echo "Type de fichier non autorisé";
             exit;
         }
-
-
     } else {
         $extension = $_POST['extension'];
     }
- 
-
-    if (!preg_match('/[0-9 ]{1,}[,.]{0,1}[0-9]{0,2}[€]{0,1}/', $prix)) {
+    if (empty($reference)) {
+        echo "La référence doit être renseignée ! <br>";
+        $check = false;
+    }
+    if (empty($categorie)) {
+        echo "La catégorie doit être renseigné ! <br>";
+        $check = false;
+    }
+    if (empty($libelle)) {
+        echo "Le libellé doit être renseignée ! <br>";
+        $check = false;
+    }
+    if (!preg_match('/^[0-9]{1,}[.|,]{0,1}[0-9]{0,2}$/', $prix)) {
         echo "Le prix doit comporter au moins 1 caractère numérique! <br>";
         $check = false;
     }
     if (!preg_match('/^[0-9]+$/', $stock)) {
         echo "Le stock doit comporter au moins 1 caractère numérique! <br>";
-        $check = false;
-    }
-    if (!preg_match('/^[A-Za-z\d]+$/', $couleur)) {
-        echo "La couleur doit comporter au moins 1 caractère alphabétique! <br>";
         $check = false;
     }
 

@@ -43,8 +43,9 @@
 
         <?php
         require "connexion_bdd.php"; // Inclusion de notrebibliothèque de fonctions
-        $db = connexionBase(); // Appel de la fonction deconnexion
-
+        $db = connexionBase(); // Appel de la fonction deconnexion 
+        
+        
         $requete = "SELECT max(pro_id) as max_pro_id FROM produits ";
         $result = $db->query($requete);
 
@@ -104,7 +105,6 @@
             $extension = null;
         }
      
-
         // 3 cas possible : rien, expression REGEX et formulaire ok
         if (empty($reference)) {
             echo "La référence doit être renseignée ! <br>";
@@ -123,20 +123,6 @@
             $check = false;
         } else  if (!preg_match('/[0-9 ]{1,}[,.]{0,1}[0-9]{0,2}[€]{0,1}/', $prix)) {
             echo "Le prix doit comporter au moins 1 caractère numérique! <br>";
-            $check = false;
-        }
-        if (empty($stock)) {
-            echo "Le stock doit être renseignée ! <br>";
-            $check = false;
-        } else  if (!preg_match('/^[0-9]+$/', $stock)) {
-            echo "Le stock doit comporter au moins 1 caractère numérique! <br>";
-            $check = false;
-        }
-        if (empty($couleur)) {
-            echo "La couleur doit être renseignée ! <br>";
-            $check = false;
-        } else  if (!preg_match('/^[A-Za-z\d]+$/', $couleur)) {
-            echo "La couleur doit comporter au moins 1 caractère alphabétique! <br>";
             $check = false;
         }
         if ($check) {

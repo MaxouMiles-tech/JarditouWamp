@@ -34,7 +34,7 @@ $oui = "";
 $dateAjout = $produit->pro_d_ajout;
 $dateModif = $produit->pro_d_modif;
 ?>
-
+ 
 <div class="container-fluid">
     <div class="row mt-3 mb-1">
         <div class="col h2 rounded bg-dark text-white-50 p-3 text-center">Modifier le produit</div>
@@ -53,16 +53,10 @@ $dateModif = $produit->pro_d_modif;
         <input type="hidden" class="form-control" value="<?php echo $id; ?>" name="id" id="id">
         <input type="hidden" class="form-control" value="<?php echo $extension; ?>" name="extension" id="extension">
         <div class="form-group">
-            <label  for="photo">Télécharger la photo du produit :</label></br> 
-            <input  type="file"  name="photo"></br>
+            <label for="reference">Référence* : </label>
+            <input type="text" class="form-control" required name=reference id="reference" value="<?php echo $reference; ?>">
         </div>
-
-        <!-- <p  id="errorPhoto" class="text-danger""></p> -->
-        <div class="form-group">
-            <label for="reference">Référence : </label>
-            <input type="text" class="form-control" name=reference id="reference" value="<?php echo $reference; ?>">
-        </div>
-        <!-- <p  id="errorRef" class="text-danger"></p> -->
+        <p  id="errorRef" class="text-danger"></p>
         <div class="form-group">
             <?php
             $requete = 'SELECT * FROM categories';
@@ -73,8 +67,8 @@ $dateModif = $produit->pro_d_modif;
                 die("Erreur dans la requête");
             }
             ?>
-            <label for="categorie">Catégorie : </label>
-            <select class="form-control" name="categorie" id="categorie">
+            <label for="categorie">Catégorie* : </label>
+            <select class="form-control" required name="categorie" id="categorie">
                 <?php
                 while ($cat = $result->fetch(PDO::FETCH_OBJ)) {
                     $selected = "";
@@ -86,32 +80,29 @@ $dateModif = $produit->pro_d_modif;
                 ?>
             </select>
         </div>
-        <!-- <p  id="errorCat" class="text-danger""></p> -->
+        <p  id="errorCat" class="text-danger""></p>
         <div class="form-group">
-            <label for="libelle">Libellé : </label>
-            <input type="text" class="form-control" name="libelle" id="libelle" value="<?php echo $libelle; ?>">
+            <label for="libelle">Libellé* : </label>
+            <input type="text" class="form-control" required name="libelle" id="libelle" value="<?php echo $libelle; ?>">
         </div>
-        <!-- <p  id="errorLibelle" class="text-danger""></p> -->
+        <p  id="errorLibelle" class="text-danger""></p>
         <div class="form-group">
             <label for="description">Description : </label>
             <textarea class="form-control  overflow-auto " name="description" id="description"><?php echo $description; ?></textarea>
         </div>
-        <!-- <p  id="errorDescription" class="text-danger""></p> -->
         <div class="form-group">
-            <label for="prix">Prix : </label>
+            <label for="prix">Prix* : </label>
             <input type="text" class="form-control" name="prix" id="prix" value="<?php echo $prix; ?>">
         </div>
-        <!-- <p  id="errorDescription" class="text-danger""></p>'-->
+        <p  id="errorPrix" class="text-danger""></p>
         <div class="form-group">
             <label for="stock">Stock : </label>
-            <input type="text" class="form-control" name="stock" id="stock" value="<?php echo $stock; ?>">
+            <input type="text" required class="form-control" name="stock" id="stock" value="<?php echo $stock; ?>">
         </div>
-        <!-- <p  id="errorStock" class="text-danger""></p>-->
         <div class="form-group">
             <label for="couleur">Couleur : </label>
             <input type="text" class="form-control" name="couleur" id="couleur" value="<?php echo $couleur; ?>">
         </div>
-        <!-- <p  id="errorCouleur" class="text-danger""></p>'; -->
         <?php if ($bloque == 1) {
             $oui = $non;
             $non = " ";
@@ -127,13 +118,16 @@ $dateModif = $produit->pro_d_modif;
                 <label class="form-check-label" for="non">Non</label>
             </div>
         </div>
-        <!-- <p  id="errorbloque" class="text-danger""></p> -->
+        <div class="form-group">
+            <label  for="photo">Télécharger la photo du produit :</label></br> 
+            <input  type="file"  name="photo"></br>
+        </div>
         <!-- bouttons -->
         <a <?php echo 'href="detail.php?id=' . $pro_id . '"' ?> title="retour" role="button" class="btn btn-dark active mt-3">Retour</a>
         <button type="submit" class="btn btn-warning mt-3">Envoyer</button>
         <button type="reset" title="sup" class="btn btn-danger mt-3">Effacer</button>
     </form>
-
+    <script src="public/js/JarditouUpdate.js"></script>
     <!--menu de navigation du pied de page-->
     <?php
     include("footer.php");

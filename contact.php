@@ -12,18 +12,18 @@
         <form action="public/php/validation.php" method="POST" id= "verifcontact" name="verifcontact">
             <div class="form-group">
                 <label for="nom">Nom*</label>
-                <input type="text" class="form-control" name="nom" id="nom" placeholder= "Veuillez saisir votre nom" >
+                <input type="text" class="form-control" name="nom" id="nom" required placeholder= "Veuillez saisir votre nom" >
             </div>
             <p  id="errorNom" class="text-danger""></p>
             <div class="form-group">
                 <label for="prenom">Prénom*</label>
-                <input type="text" class="form-control" name="prenom" id="prenom" placeholder= "Veuillez saisir votre prénom">
+                <input type="text" class="form-control" name="prenom" id="prenom" required placeholder= "Veuillez saisir votre prénom">
             </div>
             <p  id="errorPrenom" class="text-danger""></p>
             <div class="form-group">
                 <p><label>Sexe*</label></p>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sexe" id="feminin" value="Féminin" >
+                    <input class="form-check-input" type="radio" name="sexe" required id="feminin" value="Féminin" >
                     <label class="form-check-label" for="feminin">Féminin</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -34,12 +34,12 @@
             <p  id="errorSexe" class="text-danger""></p>
             <div class="form-group">
                 <label for="date">Date de naissance*</label>
-                <input type="text" class="form-control" id="date" name="date">
+                <input type="date" class="form-control" id="date" required name="date">
             </div>
             <p  id="errorDate" class="text-danger""></p>
             <div class="form-group">
                 <label for="codePostal">Code Postal*</label>
-                <input type="text" class="form-control" id="codePostal" name = "cp">
+                <input type="number" class="form-control" required id="codePostal" name = "cp">
             </div>
             <p  id="errorCp" class="text-danger""></p>
             <div class="form-group">
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email*</label>
-                <input type="text" class="form-control" name="email" id="email" placeholder= "dave.loper@afpa.fr">
+                <input type="text" class="form-control" required name="email" id="email" placeholder= "dave.loper@afpa.fr">
             </div>
             <p  id="errorEmail" class="text-danger""></p>
         <h1>Votre demande</h1>
@@ -68,7 +68,7 @@
             </div>
             <div class="form-group">
                 <label for="votrequestion">Votre question* : </label>
-                <textarea class="form-control" name="question" id="votrequestion" ></textarea>
+                <textarea class="form-control" required name="question" id="votrequestion" ></textarea>
               </div>
               <p  id="errorQuestion" class="text-danger""></p>
               <div class="form-check">
@@ -81,6 +81,7 @@
         </form>
     </div>
 <!--menu de navigation du pied de page-->
+<script src="public/js/JarditouContact.js"></script>
 <?php 
     include("footer.php");
 ?>

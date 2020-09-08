@@ -1,5 +1,5 @@
 
-document .querySelector("#form1").onsubmit = function checkForm(f) 
+document .querySelector("#verifcontact").onsubmit = function checkForm(f) 
 {
     var check = true;
     var nom = document.getElementById("nom").value;
