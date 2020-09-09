@@ -47,10 +47,8 @@
         $pro_id = $_GET["id"];
 
         $requete = 'SELECT pro_photo from produits
-        where pro_id=' . $pro_id;
+                    where pro_id=' . $pro_id;
         $result = $db->query($requete);
-
-
         $produit = $result->fetch(PDO::FETCH_OBJ);
         $extension =$produit->pro_photo;
 

@@ -52,7 +52,7 @@
     $reference = $_POST['reference'];
     $categorie = $_POST['categorie'];
     $libelle = $_POST['libelle'];
-    $description = $_POST['description'];
+    $descrip = $_POST['description'];
     $prix = $_POST['prix'];
     $stock = $_POST['stock'];
     // Création de la variable qui va stocker le texte en minuscule
@@ -107,32 +107,26 @@
         $check = false;
     }
 
-if ($check) {
+    if ($check) {
+            $stmt = $db->prepare('UPDATE produits 
+                                    SET pro_cat_id =:categorie ,pro_ref =:reference,pro_libelle= :libelle, pro_description =:descrip,pro_prix = :prix, pro_stock =:stock, pro_couleur =:couleur,pro_photo= :extension, pro_d_modif =:dateModif,pro_bloque= :bloque
+                                    Where pro_id=:id' );
 
-/* Définition de la requête */
-$query = "UPDATE produits SET   
-    pro_photo = '".$extension."',
-    pro_cat_id = ".$categorie.",
-    pro_ref = '".$reference."',
-    pro_libelle = '".$libelle."',
-    pro_description = '".$description."',
-    pro_prix = ".$prix.",
-    pro_stock  = ".$stock.",
-    pro_couleur = '".$couleur."',
-    pro_d_modif = '".$datemodif."',
-    pro_bloque = ".$bloque."
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            $stmt->bindParam(":categorie", $categorie, PDO::PARAM_INT);
+            $stmt->bindParam(":reference", $reference, PDO::PARAM_STR);
+            $stmt->bindParam(":libelle", $libelle, PDO::PARAM_STR);
+            $stmt->bindParam(":descrip", $descrip, PDO::PARAM_STR);
+            $stmt->bindParam(":prix", $prix, PDO::PARAM_INT);
+            $stmt->bindParam(":stock", $stock, PDO::PARAM_INT);
+            $stmt->bindParam(":couleur", $couleur, PDO::PARAM_STR);
+            $stmt->bindParam(":extension", $extension, PDO::PARAM_STR);
+            $stmt->bindParam(":dateModif", $dateModif, PDO::PARAM_STR);
+            $stmt->bindParam(":bloque", $bloque, PDO::PARAM_INT);
 
-Where pro_id  = $id";
-
-
-
-/* Envoie de la requête */
-$result = $db->query($query);
-
-header("Location:../../tableau.php");
-
-}
- 
+            $stmt->execute();
+            header("Location:../../tableau.php");
+    }
 
 ?>
 </body>

@@ -44,8 +44,8 @@
         <?php
         require "connexion_bdd.php"; // Inclusion de notrebibliothèque de fonctions
         $db = connexionBase(); // Appel de la fonction deconnexion 
-        
-        
+
+
         $requete = "SELECT max(pro_id) as max_pro_id FROM produits ";
         $result = $db->query($requete);
 
@@ -67,7 +67,7 @@
         $reference = $_POST['reference'];
         $categorie = $_POST['categorie'];
         $libelle = $_POST['libelle'];
-        $description = $_POST['description'];
+        $descrip = $_POST['description'];
         $prix = $_POST['prix'];
         $stock = $_POST['stock'];
         // Création de la variable qui va stocker le texte en minuscule
@@ -80,31 +80,31 @@
         $dateAjout = date('Y-m-d');
 
 
-        if (!empty($_FILES["photo"]["name"])){
+        if (!empty($_FILES["photo"]["name"])) {
 
             $extension = substr(strrchr($_FILES["photo"]["name"], "."), 1);
-    
+
             // On met les types autorisés dans un tableau (ici pour une image)
             $aMimeTypes = array("image/ai", "image/eps", "image/jpeg", "image/gif", "image/pdf", "image/jpg", "image/png",  "image/psd", "image/tiff", "image/svg");
-    
+
             // On extrait le type du fichier via l'extension FILE_INFO 
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mimetype = finfo_file($finfo, $_FILES["photo"]["tmp_name"]);
             finfo_close($finfo);
-    
+
             if (in_array($mimetype, $aMimeTypes)) {
-                if (isset($_FILES['photo']) AND $_FILES["photo"]["error"] == 0) {
-                    move_uploaded_file($_FILES['photo']['tmp_name'], '../../public/images/' . $id.".".$extension);
+                if (isset($_FILES['photo']) and $_FILES["photo"]["error"] == 0) {
+                    move_uploaded_file($_FILES['photo']['tmp_name'], '../../public/images/' . $id . "." . $extension);
                 }
             } else {
                 // Le type n'est pas autorisé, donc ERREUR
                 echo "Type de fichier non autorisé";
                 exit;
-            }   
+            }
         } else {
             $extension = null;
         }
-     
+
         // 3 cas possible : rien, expression REGEX et formulaire ok
         if (empty($reference)) {
             echo "La référence doit être renseignée ! <br>";
@@ -126,17 +126,50 @@
             $check = false;
         }
         if ($check) {
-            $requete = 'SELECT pro_id FROM produits 
-                        WHERE pro_ref ="' . $reference . '" AND pro_libelle ="' . $libelle . '" AND pro_couleur ="' . $couleur . '"';
-            $result = $db->query($requete);
-            if (!$result->fetch(PDO::FETCH_OBJ)) {
-                $db->exec('INSERT INTO produits (pro_id, pro_cat_id, pro_ref, pro_libelle, pro_description, pro_prix, pro_stock, pro_couleur, pro_photo, pro_d_ajout, pro_bloque)
-                VALUE(' . $id . ',' . $categorie . ',"' . $reference . '","' . $libelle . '","' . $description . '",' . $prix . ',' . $stock . ',"' . $couleur . '","' . $extension . '","' . $dateAjout . '",' . $bloque . ')');
+            $stmt = $db->prepare('SELECT pro_id FROM produits WHERE pro_ref =:reference AND pro_libelle =:libelle AND pro_couleur =:couleur');
+            $stmt->bindParam(":reference", $reference, PDO::PARAM_STR);
+            $stmt->bindParam(":libelle", $libelle, PDO::PARAM_STR);
+            $stmt->bindParam(":couleur", $couleur, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            if (!$stmt->fetch(PDO::FETCH_OBJ)) {
+                $stmt = $db->prepare('INSERT INTO produits (pro_id, pro_cat_id, pro_ref, pro_libelle, pro_description, pro_prix, pro_stock, pro_couleur, pro_photo, pro_d_ajout, pro_bloque) 
+                                        VALUES(:id, :categorie, :reference, :libelle, :descrip, :prix, :stock, :couleur, :extension, :dateAjout, :bloque)');
+    
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->bindParam(":categorie", $categorie, PDO::PARAM_INT);
+                $stmt->bindParam(":reference", $reference, PDO::PARAM_STR);
+                $stmt->bindParam(":libelle", $libelle, PDO::PARAM_STR);
+                $stmt->bindParam(":descrip", $descrip, PDO::PARAM_STR);
+                $stmt->bindParam(":prix", $prix, PDO::PARAM_INT);
+                $stmt->bindParam(":stock", $stock, PDO::PARAM_INT);
+                $stmt->bindParam(":couleur", $couleur, PDO::PARAM_STR);
+                $stmt->bindParam(":extension", $extension, PDO::PARAM_STR);
+                $stmt->bindParam(":dateAjout", $dateAjout, PDO::PARAM_STR);
+                $stmt->bindParam(":bloque", $bloque, PDO::PARAM_INT);
+    
+                $stmt->execute();
                 header("Location:../../tableau.php");
             } else {
                 echo '<br>Votre produit existe déjà !!';
             }
         }
+    
+
+        // $requete = 'SELECT pro_id FROM produits 
+        //             WHERE pro_ref ="' . $reference . '" AND pro_libelle ="' . $libelle . '" AND pro_couleur ="' . $couleur . '"';
+
+
+
+        //     $result = $db->query($requete);
+        //     if (!$result->fetch(PDO::FETCH_OBJ)) {
+        //         $db->exec('INSERT INTO produits (pro_id, pro_cat_id, pro_ref, pro_libelle, pro_description, pro_prix, pro_stock, pro_couleur, pro_photo, pro_d_ajout, pro_bloque)
+        //         VALUE(' . $id . ',' . $categorie . ',"' . $reference . '","' . $libelle . '","' . $description . '",' . $prix . ',' . $stock . ',"' . $couleur . '","' . $extension . '","' . $dateAjout . '",' . $bloque . ')');
+        //         header("Location:../../tableau.php");
+        //     } else {
+        //         echo '<br>Votre produit existe déjà !!';
+        //     }
+        // }
         ?>
 </body>
 <!--menu de navigation du pied de page-->
