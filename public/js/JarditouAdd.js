@@ -1,23 +1,27 @@
-
+// validation java du formulaire d'ajout
 document .querySelector("#verifadd").onsubmit = function checkForm(f) 
 {
+// variable a true qui sera verfifier à chaque condition
     var check = true;
+
+//creation des variable obligatoire:  on recupere les valeurs entrées grace à l'identifiant
     var reference = document.getElementById("reference").value;
     var libelle = document.getElementById("libelle").value;
     var cat = document.getElementById("categorie").value;
     var prix = document.getElementById("prix").value;
 
-
+// regex qui accepte tous les caracteres de l'alphabet, underscore et espaces avec un min d'un caractere
     var filtretextnum = new RegExp (/^[\w\s]+$/);
 
-
-
+// chaque champ est teste par l'expression reguliere et retourne la variable à false
     if (!filtretextnum.test(reference) )
     {
+// un message d'erreur est ecrit à la suite du champ
         document.getElementById("errorRef").innerHTML = "La Référence doit comporter au moins 1 caractère !";
-
         check = false; 
     }
+
+// reinitialise le champ erreur     
     else
     {
         document.getElementById("errorRef").innerHTML = "";
@@ -48,6 +52,8 @@ document .querySelector("#verifadd").onsubmit = function checkForm(f)
     else
     {
         document.getElementById("errorPrix").innerHTML = "";
-    }    
+    }
+    
+// si tout se passe bien la variable est retourner sans modification
     return check;
 }
