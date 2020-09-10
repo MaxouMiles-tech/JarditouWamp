@@ -64,7 +64,7 @@
         $prix = $_POST['prix'];
         $stock = $_POST['stock'];
         $bloque = $_POST['bloque'];
-        $datemodif = date('Y-m-d');
+        $dateModif = date('Y-m-d');
 
 // Création de la variable qui va stocker le texte en minuscule
         $texteMinuscule = strtolower($_POST["couleur"]);
