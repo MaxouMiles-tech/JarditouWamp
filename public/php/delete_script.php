@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
+<!-- page Html pour faire figurer les messages d'erreurs -->
 <body>
-    <!-- header -->
-    <!-- logo  -->
+<!-- header -->
+<!-- logo  -->
     <div class="container-fluid">
         <div class="row d-none d-md-flex">
             <img class="col-2 img-fluid" src="../images/jarditou_logo.jpg" alt="Logo Jarditou" title="Logo Jarditou" id="logo"><br>
             <div class="col-10 h2 align-self-center text-right  ">Tout le jardin</div>
         </div>
-        <!-- navbar -->
+<!-- navbar -->
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <a class="navbar-brand" href="../../index.php">Jarditou.com</a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNav">
@@ -41,29 +42,50 @@
             </div>
         </nav>
 
+<!-- script php  -->
         <?php
-        require "connexion_bdd.php"; // Inclusion de notrebibliothèque de fonctions
-        $db = connexionBase(); // Appel de la fonction deconnexion
+
+// Inclusion bibliothèque 
+        require "connexion_bdd.php";
+
+// Appel de la fonction deconnexion 
+        $db = connexionBase();
+
+//recuperation de l'id passe en parametre dans l'url
         $pro_id = $_GET["id"];
 
+// requette pour recuperer l'extension de la photo
         $requete = 'SELECT pro_photo from produits
                     where pro_id=' . $pro_id;
+
+// stockage du resultat sous forme d'objet
         $result = $db->query($requete);
+
+//affecte a $produit la premiere ligne du resultat sous forme de tableau d'objets
         $produit = $result->fetch(PDO::FETCH_OBJ);
+
+//on recupere l'element de la colonne(pro_photo) de la ligne recupere
         $extension =$produit->pro_photo;
 
+//requete de suppression 
         $query = "DELETE FROM produits Where pro_id  = $pro_id";
-        /* Envoie de la requête */
+
+/* Envoie de la requête */
         $result = $db->query($query);
 
-        if ($result) {
+        if ($result) 
+        {
             $chemin = '../../public/images/'.$pro_id.'.'.$extension;
+
+// suppression de l'image dans le dossier en local 
             unlink($chemin);
+
+//redirection vers la page du catalogue
             header("Location:../../tableau.php");
         }
-
         ?>
-        <!--menu de navigation du pied de page-->
+
+<!--menu de navigation du pied de page-->
         <div class="shadow mt-3 mb-1 mx-0">
             <nav class="navbar navbar-expand-md navbar-dark bg-dark rounded">
                 <ul class="navbar-nav ">

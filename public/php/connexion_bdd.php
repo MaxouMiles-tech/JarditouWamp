@@ -1,7 +1,8 @@
+<!-- fonction pour la connexion a la base de donnees -->
 <?php
     function connexionBase()
     {
-       // Paramètre de connexion serveur
+// Paramètre de connexion serveur
        $host = "localhost";
        $login= "root";  // Votre loggin d'accès au serveur de BDD 
        $password="";    // Le Password pour vous identifier auprès du serveur

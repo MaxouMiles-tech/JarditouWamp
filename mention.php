@@ -3,12 +3,12 @@
 include("header.php");
 ?>
 
-<!-- corps du site      -->
+<!-- titre de la page  -->  
 <div class="row mt-3 mb-1 mx-0">
     <div class="col h2 rounded bg-dark text-white-50 p-3 text-center">Mention légales</div>
 </div>
-<div class="row d-flex mx-0">
 
+<div class="row d-flex mx-0">
     <div class="shadow col-12 col-md-8">
         <p class="h2" id="prix">Les Prix de vente</p>
         <p>
@@ -57,10 +57,13 @@ include("header.php");
             Ce site est hébergé par la société AFPA à Amiens.
         </p>
     </div>
+
     <div class="shadow col-12 col-md-4 mt-3 mt-lg-0 bg-warning">
         <p class="h2 text-center mt-3">[COLONNE DROITE]</p>
     </div>
+
 </div>
+
 <!--menu de navigation du pied de page-->
 <?php
 include("footer.php");

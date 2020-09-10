@@ -42,7 +42,8 @@ document .querySelector("#verifadd").onsubmit = function checkForm(f)
     else
     {
         document.getElementById("errorCat").innerHTML = "";
-    }
+
+//regex pour controler le format du prix
     var filtreprice = new RegExp (/^[0-9]{1,}[.|,]{0,1}[0-9]{0,2}$/)
     if (!filtreprice.test(prix))
     {

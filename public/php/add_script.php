@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
+<!-- page Html pour faire figurer les messages d'erreurs -->
 <body>
-    <!-- header -->
-    <!-- logo  -->
+<!-- header -->
+<!-- logo  -->
     <div class="container-fluid">
         <div class="row d-none d-md-flex">
             <img class="col-2 img-fluid" src="../images/jarditou_logo.jpg" alt="Logo Jarditou" title="Logo Jarditou" id="logo"><br>
             <div class="col-10 h2 align-self-center text-right  ">Tout le jardin</div>
         </div>
-        <!-- navbar -->
+<!-- navbar -->
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <a class="navbar-brand" href="index.php">Jarditou.com</a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNav">
@@ -41,101 +42,132 @@
             </div>
         </nav>
 
+<!-- script php  -->
         <?php
-        require "connexion_bdd.php"; // Inclusion de notrebibliothèque de fonctions
-        $db = connexionBase(); // Appel de la fonction deconnexion 
 
+// Inclusion bibliothèque 
+        require "connexion_bdd.php"; 
 
+// Appel de la fonction deconnexion 
+        $db = connexionBase(); 
+
+// requette pour recuperer l'id max dans la base pour renommer l'image
         $requete = "SELECT max(pro_id) as max_pro_id FROM produits ";
         $result = $db->query($requete);
 
-        if (!$result) {
+// gestion de l'erreur 
+        if (!$result) 
+        {
             $tableauErreurs = $db->errorInfo();
             echo $tableauErreur[2];
             die("Erreur dans la requête");
         }
 
-        if ($result->rowCount() == 0) {
-            // Pas d'enregistrement
+        if ($result->rowCount() == 0) 
+        {
+// Pas d'enregistrement
             die("La table est vide");
         }
 
-        //  Renvoi de l'enregistrement sous forme d'un objet
+//affecte a $max la premiere ligne du resultat sous forme de tableau d'objets
         $max = $result->fetch(PDO::FETCH_OBJ);
 
-        // declaration de variable qui recupere la value
+// declaration de variable qui recupere les valeurs du formulaire
         $reference = $_POST['reference'];
         $categorie = $_POST['categorie'];
         $libelle = $_POST['libelle'];
         $descrip = $_POST['description'];
         $prix = $_POST['prix'];
         $stock = $_POST['stock'];
-        // Création de la variable qui va stocker le texte en minuscule
-        $texteMinuscule = strtolower($_POST["couleur"]);
-        // Création de la variable qui va mettre en majuscule la première lettre
-        $couleur = ucwords($texteMinuscule);
-        $check = true;
         $bloque = $_POST['bloque'];
-        $id = ($max->max_pro_id) + 1;
         $dateAjout = date('Y-m-d');
 
+// Création de la variable qui va stocker le texte en minuscule
+        $texteMinuscule = strtolower($_POST["couleur"]);
 
-        if (!empty($_FILES["photo"]["name"])) {
+// Création de la variable qui va mettre en majuscule la première lettre
+        $couleur = ucwords($texteMinuscule);
 
+//variable necessaire à la validation du formulaire 
+        $check = true;
+        $id = ($max->max_pro_id) + 1;
+
+// gestion du telechargement de la photo
+        if (!empty($_FILES["photo"]["name"])) 
+        {
             $extension = substr(strrchr($_FILES["photo"]["name"], "."), 1);
 
-            // On met les types autorisés dans un tableau (ici pour une image)
+// On met les types autorisés dans un tableau (ici pour une image)
             $aMimeTypes = array("image/ai", "image/eps", "image/jpeg", "image/gif", "image/pdf", "image/jpg", "image/png",  "image/psd", "image/tiff", "image/svg");
 
-            // On extrait le type du fichier via l'extension FILE_INFO 
+// On extrait le type du fichier via l'extension FILE_INFO 
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mimetype = finfo_file($finfo, $_FILES["photo"]["tmp_name"]);
             finfo_close($finfo);
 
-            if (in_array($mimetype, $aMimeTypes)) {
-                if (isset($_FILES['photo']) and $_FILES["photo"]["error"] == 0) {
+            if (in_array($mimetype, $aMimeTypes)) 
+            {
+                if (isset($_FILES['photo']) and $_FILES["photo"]["error"] == 0) 
+                {
                     move_uploaded_file($_FILES['photo']['tmp_name'], '../../public/images/' . $id . "." . $extension);
                 }
-            } else {
-                // Le type n'est pas autorisé, donc ERREUR
-                echo "Type de fichier non autorisé";
-                exit;
+            } 
+            else 
+            {
+// Le type n'est pas autorisé, donc ERREUR
+            echo "Type de fichier non autorisé";
+            exit;
             }
-        } else {
+        }    
+        else 
+        {
+//reinitialiastion de la variable 
             $extension = null;
         }
 
-        // 3 cas possible : rien, expression REGEX et formulaire ok
-        if (empty($reference)) {
+//validation des champs necessaires du formulaire 
+//ces champs ne doivent pas etre vide sinon renvoie false ce qui empeche l'envoi du formulaire
+        if (empty($reference)) 
+        {
             echo "La référence doit être renseignée ! <br>";
             $check = false;
         }
-        if (empty($categorie)) {
+        if (empty($categorie)) 
+        {
             echo "La catégorie doit être renseigné ! <br>";
             $check = false;
         }
-        if (empty($libelle)) {
+        if (empty($libelle)) 
+        {
             echo "Le libellé doit être renseignée ! <br>";
             $check = false;
         }
-        if (empty($prix)) {
+        if (empty($prix)) 
+        {
             echo "Le prix doit être renseignée ! <br>";
             $check = false;
-        } else  if (!preg_match('/[0-9 ]{1,}[,.]{0,1}[0-9]{0,2}[€]{0,1}/', $prix)) {
+//regex pour controler le format du prix
+        }
+        else  if (!preg_match('/[0-9 ]{1,}[,.]{0,1}[0-9]{0,2}[€]{0,1}/', $prix)) 
+        {
             echo "Le prix doit comporter au moins 1 caractère numérique! <br>";
             $check = false;
         }
-        if ($check) {
+
+//si le formulaire est valide on verifie l'existence du produit grace a 4 criteres
+        if ($check) 
+        {
             $stmt = $db->prepare('SELECT pro_id FROM produits WHERE pro_ref =:reference AND pro_libelle =:libelle AND pro_couleur =:couleur');
             $stmt->bindParam(":reference", $reference, PDO::PARAM_STR);
             $stmt->bindParam(":libelle", $libelle, PDO::PARAM_STR);
             $stmt->bindParam(":couleur", $couleur, PDO::PARAM_STR);
             $stmt->execute();
     
-            if (!$stmt->fetch(PDO::FETCH_OBJ)) {
+//si il n'y a pas de resulat on ajoute le porduit avec une requete preparé          
+            if (!$stmt->fetch(PDO::FETCH_OBJ)) 
+            {
                 $stmt = $db->prepare('INSERT INTO produits (pro_id, pro_cat_id, pro_ref, pro_libelle, pro_description, pro_prix, pro_stock, pro_couleur, pro_photo, pro_d_ajout, pro_bloque) 
-                                        VALUES(:id, :categorie, :reference, :libelle, :descrip, :prix, :stock, :couleur, :extension, :dateAjout, :bloque)');
-    
+                                      VALUES(:id, :categorie, :reference, :libelle, :descrip, :prix, :stock, :couleur, :extension, :dateAjout, :bloque)');
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->bindParam(":categorie", $categorie, PDO::PARAM_INT);
                 $stmt->bindParam(":reference", $reference, PDO::PARAM_STR);
@@ -149,29 +181,19 @@
                 $stmt->bindParam(":bloque", $bloque, PDO::PARAM_INT);
     
                 $stmt->execute();
+
+//redirection vers la page du catalogue
                 header("Location:../../tableau.php");
-            } else {
+            }
+            else 
+            {
+             
+// sinon le produit existe deja : erreur 
                 echo '<br>Votre produit existe déjà !!';
             }
         }
-    
-
-        // $requete = 'SELECT pro_id FROM produits 
-        //             WHERE pro_ref ="' . $reference . '" AND pro_libelle ="' . $libelle . '" AND pro_couleur ="' . $couleur . '"';
-
-
-
-        //     $result = $db->query($requete);
-        //     if (!$result->fetch(PDO::FETCH_OBJ)) {
-        //         $db->exec('INSERT INTO produits (pro_id, pro_cat_id, pro_ref, pro_libelle, pro_description, pro_prix, pro_stock, pro_couleur, pro_photo, pro_d_ajout, pro_bloque)
-        //         VALUE(' . $id . ',' . $categorie . ',"' . $reference . '","' . $libelle . '","' . $description . '",' . $prix . ',' . $stock . ',"' . $couleur . '","' . $extension . '","' . $dateAjout . '",' . $bloque . ')');
-        //         header("Location:../../tableau.php");
-        //     } else {
-        //         echo '<br>Votre produit existe déjà !!';
-        //     }
-        // }
         ?>
-</body>
+
 <!--menu de navigation du pied de page-->
 <div class="shadow mt-3 mb-1 mx-0">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark rounded">
