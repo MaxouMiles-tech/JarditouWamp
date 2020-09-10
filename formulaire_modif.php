@@ -135,7 +135,7 @@ $dateModif = $produit->pro_d_modif;
 
         <div class=" form-group">
             <label for="stock">Stock : </label>
-            <input type="text" required class="form-control" name="stock" id="stock" value="<?php echo $stock; ?>">
+            <input type="number" required class="form-control" name="stock" id="stock" value="<?php echo $stock; ?>">
         </div>
 
         <div class="form-group">

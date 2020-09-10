@@ -94,7 +94,7 @@ $bloque = $produit->pro_bloque;
 
     <div class="form-group">
       <label for="stock">Stock : </label>
-      <input type="text" readOnly class="form-control" placeholder="<?php echo $stock; ?>"">
+      <input type="number" readOnly class="form-control" placeholder="<?php echo $stock; ?>"">
     </div>
 
     <div class=" form-group">

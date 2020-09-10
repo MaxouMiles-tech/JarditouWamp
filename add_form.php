@@ -69,13 +69,13 @@ include("header.php");
 
     <div class="form-group">
         <label for="prix">Prix* : </label>
-        <input type="number" class="form-control" required name="prix" id="prix" placeholder="Entrez le Prix">
+        <input type="text" class="form-control" required name="prix" id="prix" placeholder="Entrez le Prix">
     </div>
     <p id="errorPrix" class="text-danger"></p>
 
     <div class="form-group">
         <label for="stock">Stock : </label>
-        <input type="text" class="form-control" name="stock" id="stock" placeholder="Entrez le Stock">
+        <input type="number" class="form-control" name="stock" id="stock" placeholder="Entrez le Stock">
     </div>
 
     <div class="form-group">
