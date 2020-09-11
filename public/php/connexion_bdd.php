@@ -3,10 +3,22 @@
     function connexionBase()
     {
 // Paramètre de connexion serveur
-       $host = "localhost";
-       $login= "root";  // Votre loggin d'accès au serveur de BDD 
-       $password="";    // Le Password pour vous identifier auprès du serveur
-       $base = "jarditou";  // La bdd avec laquelle vous voulez travailler 
+    if($_SERVER["SERVER_NAME"] != "dev.amorce.org")
+    {
+        $host = "localhost";
+        $login= "root";  // Votre loggin d'accès au serveur de BDD 
+        $password="";    // Le Password pour vous identifier auprès du serveur
+        $base = "Jarditou";  // La bdd avec laquelle vous voulez travailler 
+    }
+    else 
+    {
+    $host = "localhost";
+    $login= "boussoufz";  // Votre loggin d'accès au serveur de BDD 
+    $password="zb20103";    // Le Password pour vous identifier auprès du serveur
+    $base = "boussoufz";  // La bdd avec laquelle vous voulez travailler 
+    }
+
+
 
        try 
        {
