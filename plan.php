@@ -20,15 +20,9 @@ include("header.php");
             </div>
         </li>
         <li class="nav-item dropdown">
-            <a class="h4 h4 nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="tableau.php" role="button" aria-haspopup="true" aria-expanded="false">Tableau</a>
+            <a class="h4 h4 nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="tableau.php" role="button" aria-haspopup="true" aria-expanded="false">Catalogue</a>
             <div class="dropdown-menu">
                 <a class="dropdown-item " href="tableau.php"  >Catalogue de produit</a>
-                    <li class="nav-item dropdown">
-                        <a class="h4 h4 nav-link dropdown-toggle text-dark" data-toggle="dropdown" href="tableau.php" role="button" aria-haspopup="true" aria-expanded="false">Tableau</a>
-                        <div class="dropdown-menu">
-
-
-
                 <a class="dropdown-item " href="add_form.php">Nouveau produit</a>
             </div>
         </li>
