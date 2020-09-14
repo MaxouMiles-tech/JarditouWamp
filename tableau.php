@@ -25,8 +25,8 @@ if ($result->rowCount() == 0)
 <!-- titre de la page  -->  
 <div class="row shadow mt-3 mb-3 mx-0 p-3  rounded bg-dark">
     <div class="col-2  text-white-50 text-right"></div>
-    <div class="col-8 h2 text-white-50 text-center">Catalogue</div>
-    <div class="col-2 text-center">
+    <div class="col-md-8 h2 text-white-50 text-center">Catalogue</div>
+    <div class="col-md-2 text-center">
         <a class="text-white-50 nav-link" href="add_form.php">Ajouter un produit</a>
     </div>
 </div>
